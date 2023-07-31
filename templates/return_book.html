@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Library Management System - Return Book</title>
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{{ url_for('static', filename='return_book_style.css') }}"
+    />
+  </head>
+  <body>
+    {% include 'navbar.html' %}
+    <h1>Library Management System - Return Book</h1>
+    <form action="{{ url_for('return_book') }}" method="post" id="returnForm">
+      <label for="member_name">Member Name:</label>
+      <select id="member_name" name="member_name" required>
+        <option value="">Select Member</option>
+        {% for member_name in member_names %}
+        <option value="{{ member_name }}">{{ member_name }}</option>
+        {% endfor %}
+      </select>
+
+      <label for="book_id">Book Issued:</label>
+      <select id="book_id" name="book_id" required>
+        <option value="">Select Book</option>
+      </select>
+
+      <input type="submit" value="Return Book" />
+    </form>
+
+    <br />
+    <br />
+    <table>
+      <tr>
+        <th>Transaction ID</th>
+        <th>Book ID</th>
+        <th>Title</th>
+        <th>Author</th>
+        <th>Member Name</th>
+        <th>Issue Date</th>
+        <th>Rent</th>
+        <th>Action</th>
+        <!-- New column for Return button -->
+      </tr>
+      {% for issued_book in issued_books %}
+      <tr>
+        <td>{{ issued_book.transaction_id }}</td>
+        <td>{{ issued_book.book_id }}</td>
+        <td>{{ issued_book.book_title }}</td>
+        <td>{{ issued_book.book_author }}</td>
+        <td>{{ issued_book.member_name }}</td>
+        <td>{{ issued_book.issue_date }}</td>
+        <td>{{ issued_book.rent }}</td>
+        <td>
+          <form action="{{ url_for('return_book') }}" method="post">
+            <input
+              type="hidden"
+              name="member_name"
+              value="{{ issued_book.member_name }}"
+            />
+            <input
+              type="hidden"
+              name="book_id"
+              value="{{ issued_book.book_id }}"
+            />
+            <input type="submit" value="Return" />
+          </form>
+        </td>
+      </tr>
+      {% endfor %}
+    </table>
+
+    <script>
+      const memberDropdown = document.getElementById('member_name');
+      const bookDropdown = document.getElementById('book_id');
+
+      memberDropdown.addEventListener('change', () => {
+        const selectedMember = memberDropdown.value;
+        bookDropdown.innerHTML = '<option value="">Select Book</option>';
+        {% for issued_book in issued_books %}
+          if ("{{ issued_book.member_name }}" === selectedMember) {
+            const bookOption = document.createElement('option');
+            bookOption.value = "{{ issued_book.book_id }}";
+            bookOption.textContent = "{{ issued_book.book_title }} ({{ issued_book.book_author }})";
+            bookDropdown.appendChild(bookOption);
+          }
+        {% endfor %}
+      });
+    </script>
+  </body>
+</html>

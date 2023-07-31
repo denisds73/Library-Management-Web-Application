@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Library Management System - Edit Member</title>
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{{ url_for('static', filename='edit_member_style.css') }}"
+    />
+  </head>
+  <body>
+    {% include 'navbar.html' %}
+    <h1>Library Management System - Edit Member</h1>
+    <form
+      action="{{ url_for('edit_member', member_id=member[0]) }}"
+      method="post"
+    >
+      <label for="name">Name:</label>
+      <input
+        type="text"
+        id="name"
+        name="name"
+        value="{{ member[1] }}"
+        required
+      />
+      <input type="submit" value="Update Member" />
+    </form>
+  </body>
+</html>

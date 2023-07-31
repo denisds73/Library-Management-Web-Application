@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Library Management System - Home</title>
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{{ url_for('static', filename='home_style.css') }}"
+    />
+  </head>
+  <body>
+    <nav>
+      <ul class="navbar">
+        <li class="nav-item">
+          <a href="{{ url_for('add_book') }}">Manage Books</a>
+        </li>
+        <li class="nav-item">
+          <a href="{{ url_for('add_member') }}">Manage Members</a>
+        </li>
+        <li class="nav-item">
+          <a href="{{ url_for('issue_book') }}">Issue Book</a>
+        </li>
+        <li class="nav-item">
+          <a href="{{ url_for('return_book') }}">Return Book</a>
+        </li>
+      </ul>
+    </nav>
+    <h1>Library Management System</h1>
+    <p>
+      This is a simple Library Management Web Application. You can use it for
+      add, edit, delete books and members. You can also use it to track book
+      issue and return.
+    </p>
+    <h2>Choose an Option:</h2>
+    <ul class="page-links">
+      <li><a href="{{ url_for('add_book') }}">Manage Books</a></li>
+      <li><a href="{{ url_for('add_member') }}">Manage Members</a></li>
+      <li><a href="{{ url_for('issue_book') }}">Issue Book</a></li>
+      <li><a href="{{ url_for('return_book') }}">Return Book</a></li>
+    </ul>
+  </body>
+</html>
